@@ -616,26 +616,26 @@ All SkyTunnel management interfaces share the same FastAPI backend:
 
 ```mermaid
 graph LR
-    subgraph interfaces["Management Interfaces"]
-        cli["CLI\ntunnelctl status"]
-        web["Web Dashboard\nhttp://agent:8080"]
-        tg["Telegram Bot\n/status /tunnels"]
+    subgraph mgmt["Management Interfaces"]
+        mcli["CLI\ntunnelctl status"]
+        mweb["Web Dashboard\nhttp://agent:8080"]
+        mtg["Telegram Bot\n/status /tunnels"]
     end
 
-    subgraph agent["SkyTunnel Agent"]
-        api["FastAPI REST API\n/api/*"]
-        tm["TunnelManager"]
-        db["SQLite State"]
-        api --> tm
-        api --> db
+    subgraph daemon["SkyTunnel Agent"]
+        mapi["FastAPI REST API\n/api/*"]
+        mtm["TunnelManager"]
+        mdb["SQLite State"]
+        mapi --> mtm
+        mapi --> mdb
     end
 
-    cli -->|httpx| api
-    web -->|fetch()| api
-    tg -->|direct call| api
+    mcli -->|httpx| mapi
+    mweb -->|fetch| mapi
+    mtg -->|direct call| mapi
 
-    style interfaces fill:#fdd,stroke:#a55
-    style agent fill:#ddf,stroke:#55a
+    style mgmt fill:#fdd,stroke:#a55
+    style daemon fill:#ddf,stroke:#55a
 ```
 
 ### Running the Agent
