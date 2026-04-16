@@ -1,0 +1,61 @@
+global:
+  reconnect_interval: 30        # seconds between reconnect attempts
+  health_check_interval: 60     # seconds between health checks
+  health_check_timeout: 10      # seconds before health check fails
+  log_level: INFO
+  state_db: ./tunnelctl.db      # SQLite path (":memory:" for in-memory)
+  api_port: 8080
+  api_host: 0.0.0.0
+
+telegram:
+  enabled: false
+  bot_token: "${TELEGRAM_BOT_TOKEN}"
+  chat_id: "${TELEGRAM_CHAT_ID}"
+  alert_on_disconnect: true
+  alert_on_reconnect: true
+
+endpoints:
+  - name: home-server
+    host: home.example.com
+    port: 22
+    user: tunnel
+    key_file: ~/.ssh/tunnel_key
+    proxy:
+      type: nginx
+      http_domain: "*.home.example.com"
+      ssl: true
+      config_path: /etc/nginx/conf.d/tunnelctl.conf
+      reload_command: "nginx -s reload"
+
+  - name: cloud-vps
+    host: 203.0.113.50
+    port: 22
+    user: tunnel
+    key_file: ~/.ssh/tunnel_key
+    proxy:
+      type: nginx
+      http_domain: "*.vps.example.com"
+      ssl: true
+
+tunnels:
+  - name: nas-ssh
+    internal_host: 192.168.1.10
+    internal_port: 22
+    remote_port: 2222
+    protocol: tcp
+    endpoints: [home-server, cloud-vps]
+
+  - name: nas-web
+    internal_host: 192.168.1.10
+    internal_port: 5000
+    remote_port: 8501
+    protocol: http
+    endpoints: [home-server, cloud-vps]
+    subdomain: nas
+
+  - name: pi-ssh
+    internal_host: 192.168.1.20
+    internal_port: 22
+    remote_port: 2223
+    protocol: tcp
+    endpoints: [home-server]

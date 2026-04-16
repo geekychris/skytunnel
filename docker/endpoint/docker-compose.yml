@@ -1,0 +1,23 @@
+services:
+  endpoint:
+    build:
+      context: ../..
+      dockerfile: docker/endpoint/Dockerfile
+    image: tunnelctl-endpoint:latest
+    container_name: tunnelctl-endpoint
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "2200-2299:2200-2299"   # SSH tunnel port range
+      - "8500-8599:8500-8599"   # HTTP tunnel port range
+    volumes:
+      - ./config:/app/config
+      - nginx-conf:/etc/nginx/conf.d
+    environment:
+      - PYTHONUNBUFFERED=1
+    # For arm64 (Raspberry Pi), uncomment if needed:
+    # platform: linux/arm64
+
+volumes:
+  nginx-conf:

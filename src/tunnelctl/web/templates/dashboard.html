@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title_suffix %} - Dashboard{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+<p class="refresh-info">Auto-refreshes every 5 seconds</p>
+<table>
+    <thead>
+        <tr>
+            <th>Tunnel</th>
+            <th>Endpoint</th>
+            <th>Status</th>
+            <th>Last Connected</th>
+            <th>Error</th>
+        </tr>
+    </thead>
+    <tbody id="status-table-body">
+        <tr><td colspan="5" style="text-align:center;color:var(--text-dim)">Loading...</td></tr>
+    </tbody>
+</table>
+{% endblock %}

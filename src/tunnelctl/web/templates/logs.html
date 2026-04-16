@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title_suffix %} - Logs{% endblock %}
+{% block content %}
+<h1>Logs</h1>
+<p class="refresh-info">Auto-refreshes every 10 seconds</p>
+<div class="card" id="logs-container">
+    <div style="color: var(--text-dim)">Loading...</div>
+</div>
+{% endblock %}

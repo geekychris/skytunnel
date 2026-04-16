@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tunnelctl{% block title_suffix %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav>
+        <span class="logo">tunnelctl</span>
+        <a href="/" {% if page == 'dashboard' %}class="active"{% endif %}>Dashboard</a>
+        <a href="/tunnels" {% if page == 'tunnels' %}class="active"{% endif %}>Tunnels</a>
+        <a href="/logs" {% if page == 'logs' %}class="active"{% endif %}>Logs</a>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    <script src="/static/app.js"></script>
+</body>
+</html>

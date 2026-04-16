@@ -1,0 +1,19 @@
+services:
+  agent:
+    build:
+      context: ../..
+      dockerfile: docker/agent/Dockerfile
+    image: tunnelctl-agent:latest
+    container_name: tunnelctl-agent
+    restart: unless-stopped
+    ports:
+      - "8080:8080"       # Web dashboard + API
+    volumes:
+      - ./config:/app/config
+      - ./ssh:/root/.ssh:ro
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+    # For arm64 (Raspberry Pi), uncomment if needed:
+    # platform: linux/arm64

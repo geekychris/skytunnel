@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title_suffix %} - Tunnels{% endblock %}
+{% block content %}
+<h1>Tunnel Management</h1>
+
+<div class="card">
+    <h2 style="margin-bottom: 12px; font-size: 1.1em;">Add Tunnel</h2>
+    <form onsubmit="addTunnel(event)">
+        <div class="form-row">
+            <input name="name" placeholder="Name" required>
+            <input name="internal_host" placeholder="Internal Host (e.g. 192.168.1.10)" required>
+            <input name="internal_port" type="number" placeholder="Internal Port" required>
+        </div>
+        <div class="form-row">
+            <input name="remote_port" type="number" placeholder="Remote Port" required>
+            <select name="protocol">
+                <option value="tcp">TCP</option>
+                <option value="http">HTTP</option>
+            </select>
+            <input name="endpoints" placeholder="Endpoints (comma-separated, blank=all)">
+            <input name="subdomain" placeholder="Subdomain (HTTP only)">
+        </div>
+        <div class="form-row">
+            <button type="submit">Add Tunnel</button>
+            <span id="tunnel-msg" style="color: var(--green); align-self: center;"></span>
+        </div>
+    </form>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Internal</th>
+            <th>Remote Port</th>
+            <th>Protocol</th>
+            <th>Endpoints</th>
+            <th>Subdomain</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="tunnels-table-body">
+        <tr><td colspan="7" style="text-align:center;color:var(--text-dim)">Loading...</td></tr>
+    </tbody>
+</table>
+{% endblock %}
